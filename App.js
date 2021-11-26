@@ -7,8 +7,6 @@
  */
 
 import React from 'react';
-
-
 // import Display from './components/Display';
 import TestComponent from './components/TestComponent';
 import ArtistListPage from './components/ArtistListPage';
@@ -18,30 +16,24 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HeaderTitle from './components/Header';
 
-
-
 const Stack = createStackNavigator();
 
-
-
 const App = () => {
-
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name ="Settings"  component = {SettingsPage} />
-        <Stack.Screen name ="Artists"  component = {ArtistListPage} />
-        <Stack.Screen name ="Artist"  component = {ArtistDetailPage} 
-        options={
-          ({ route }) =>
-          ({ title: route.params.name, 
-            headerTitle: () => <HeaderTitle title={ route.params.name } />
-          })          
+        <Stack.Screen name ='Settings' component = {SettingsPage} />
+        <Stack.Screen name ='Artists' component = {ArtistListPage} />
+        <Stack.Screen name ='Artist' component = {ArtistDetailPage} 
+          options={
+            ({ route }) =>
+            ({ title: route.params.name, 
+              headerTitle: () => <HeaderTitle title={ route.params.name } />
+            })          
         } />
         
       </Stack.Navigator>
-      
     </NavigationContainer>
   );
 };
