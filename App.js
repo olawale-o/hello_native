@@ -7,33 +7,21 @@
  */
 
 import React from 'react';
-// import Display from './components/Display';
-import TestComponent from './components/TestComponent';
-import ArtistListPage from './components/ArtistListPage';
-import ArtistDetailPage from './components/ArtistDetailPage';
-import SettingsPage from './components/SettingsPage';
+import Artists from './pages/Artist/Artists';
+import Settings from './pages/Setting/Settings';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HeaderTitle from './components/Header';
-
-const Stack = createStackNavigator();
+import { createDrawerNavigator } from '@react-navigation/drawer';
+// import HeaderTitle from './components/Header';
+const AuthDrawer = createDrawerNavigator();
 
 const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name ='Settings' component = {SettingsPage} />
-        <Stack.Screen name ='Artists' component = {ArtistListPage} />
-        <Stack.Screen name ='Artist' component = {ArtistDetailPage} 
-          options={
-            ({ route }) =>
-            ({ title: route.params.name, 
-              headerTitle: () => <HeaderTitle title={ route.params.name } />
-            })          
-        } />
-        
-      </Stack.Navigator>
+      <AuthDrawer.Navigator>
+        <AuthDrawer.Screen name='Settings' component={Settings} />
+        <AuthDrawer.Screen name='Artists' component={Artists} />
+      </AuthDrawer.Navigator>
     </NavigationContainer>
   );
 };

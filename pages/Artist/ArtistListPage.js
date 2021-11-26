@@ -1,7 +1,7 @@
 import React , {  useState, useEffect} from 'react';
 import {SafeAreaView, View, Text, Image, FlatList, StyleSheet, ActivityIndicator, Pressable  } 
 from 'react-native';
-import SingleArtist from '../components/shared/SingleArtist'
+import SingleArtist from './Screens/SingleArtist'
 
 const ArtistListPage = ({navigation}) => {
   const API_KEY = '3fdb610c99831dacfc2bc8f3c341cc44' ;
