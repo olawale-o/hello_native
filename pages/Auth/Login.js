@@ -10,8 +10,6 @@ import {
 } from 'react-native';
 import { auth, signInWithEmailAndPassword, onAuthStateChanged } from '../../firebase';
 
-
-
 const isAndroid = () => Platform.OS === 'android' ? 'height' :'padding';
 
 const Login = () => {
