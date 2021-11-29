@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -7,22 +7,52 @@ import {
   TouchableOpacity,
   Text,
   Platform,
-} from 'react-native'
+} from 'react-native';
+import { auth, signInWithEmailAndPassword, onAuthStateChanged } from '../../firebase';
+
+
 
 const isAndroid = () => Platform.OS === 'android' ? 'height' :'padding';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user != null) {
+        console.log('We are authenticated now!');
+      }
+    });
+  }, []);
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then(userCrendentials => {
+      const user = userCrendentials.user;
+      console.log('user', user);
+    })
+    .catch(error => alert(error.message));
+  };
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={isAndroid()}
     >
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder='Email' />
-        <TextInput style={styles.input} placeholder='Password' />
+        <TextInput
+          style={styles.input}
+          placeholder='Email'
+          value={email}
+          onChangeText={text => setEmail(text)} />
+        <TextInput
+          style={styles.input}
+          placeholder='Password'
+          value={password}
+          onChangeText={text => setPassword(text)} />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => console.log('login')}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
