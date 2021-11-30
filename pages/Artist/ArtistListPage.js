@@ -1,38 +1,17 @@
-import React , {  useState, useEffect} from 'react';
-import {SafeAreaView, View, Text, Image, FlatList, StyleSheet, ActivityIndicator, Pressable  } 
-from 'react-native';
-import SingleArtist from './Screens/SingleArtist'
+import React , { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {SafeAreaView, View, Text, Image, FlatList, StyleSheet, ActivityIndicator, Pressable } from 'react-native';
+import { MOVIEDB_API_KEY } from '@env';
+import { getArtists } from '../../redux/artist/artist_async_action';
+import artistSelector from '../../redux/artist/artistSelector';
+import SingleArtist from './Screens/SingleArtist';
 
 const ArtistListPage = ({navigation}) => {
-  const API_KEY = '3fdb610c99831dacfc2bc8f3c341cc44' ;
-  const uri = `https://api.themoviedb.org/3/person/popular?api_key=${API_KEY}`;
-  const [artists, setArtists] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const getAllArtsists = async () => {
-    setLoading(true)
-    try {
-      const response =  await fetch(uri,{ headers: {
-            "Content-type": "application/json;charset=UTF-8",
-            "Accept": "application/json"
-      } });
-            
-      const {results} =  await response.json();
-      setArtists(results)
-      setLoading(false)
-      
-    } catch (error) {
-      console.log(`error ${error}`);
-      setError("there is a problem")
-      setLoading(false)
-    }
-        
-  }
+  const dispatch = useDispatch();
+  const { loading, artists, error } = useSelector(artistSelector);
 
   useEffect(() => {
-    getAllArtsists()
-     
+    dispatch(getArtists());
   }, []);
   const renderItem = ({ item }) => <SingleArtist artist ={ item } navigation = {navigation} />;
   return (

@@ -10,7 +10,7 @@ const optionsStyle = {
 
 const Artists = () => (
   <ArtistStack.Navigator>
-    <ArtistStack.Screen name='Artists' component={ArtistListPage} options={optionsStyle} />
+    <ArtistStack.Screen name='ArtistList' component={ArtistListPage} options={optionsStyle} />
     <ArtistStack.Screen name='Artist' component={ArtistDetailPage} />
   </ArtistStack.Navigator>
 );
