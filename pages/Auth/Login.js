@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   StyleSheet,
   TextInput,
@@ -9,17 +10,19 @@ import {
   Platform,
 } from 'react-native';
 import { auth, signInWithEmailAndPassword, onAuthStateChanged } from '../../firebase';
+import { authSuccess, authToken } from '../../redux/auth/action_creators';
 
 const isAndroid = () => Platform.OS === 'android' ? 'height' :'padding';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if (user != null) {
-        console.log('We are authenticated now!');
+        dispatch(authToken(user.stsTokenManager.accessToken));
       }
     });
   }, []);
@@ -28,7 +31,7 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
     .then(userCrendentials => {
       const user = userCrendentials.user;
-      console.log('user', user);
+      dispatch(authSuccess(user));
     })
     .catch(error => alert(error.message));
   };
