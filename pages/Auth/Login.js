@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   StyleSheet,
@@ -9,8 +9,8 @@ import {
   Text,
   Platform,
 } from 'react-native';
-import { auth, signInWithEmailAndPassword, onAuthStateChanged } from '../../firebase';
-import { authSuccess, authToken } from '../../redux/auth/action_creators';
+import { auth, signInWithEmailAndPassword } from '../../firebase';
+import { authSuccess } from '../../redux/auth/action_creators';
 
 const isAndroid = () => Platform.OS === 'android' ? 'height' :'padding';
 
@@ -18,14 +18,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
-  useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      if (user != null) {
-        dispatch(authToken(user.stsTokenManager.accessToken));
-      }
-    });
-  }, []);
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
