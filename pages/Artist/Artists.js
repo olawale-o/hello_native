@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import ArtistListPage from './ArtistListPage';
 import ArtistDetailPage from './ArtistDetailPage';
 
@@ -10,8 +10,12 @@ const optionsStyle = {
 
 const Artists = () => (
   <ArtistStack.Navigator>
-    <ArtistStack.Screen name='ArtistList' component={ArtistListPage} options={optionsStyle} />
-    <ArtistStack.Screen name='Artist' component={ArtistDetailPage} />
+    <ArtistStack.Screen
+      name="ArtistList"
+      component={ArtistListPage}
+      options={optionsStyle}
+    />
+    <ArtistStack.Screen name="Artist" component={ArtistDetailPage} />
   </ArtistStack.Navigator>
 );
 

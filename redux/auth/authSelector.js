@@ -1,3 +1,3 @@
-const authSelector = (state) => state.auth;
+const authSelector = state => state.auth;
 
 export default authSelector;

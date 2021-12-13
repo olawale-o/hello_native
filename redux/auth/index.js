@@ -2,10 +2,10 @@ import {
   AUTH_FAILURE,
   AUTH_LOADING,
   AUTH_SUCCESS,
-  AUTH_TOKEN
+  AUTH_TOKEN,
 } from './action_types';
 
-const initialState = { 
+const initialState = {
   loading: false,
   user: null,
   userToken: null,
@@ -14,13 +14,13 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTH_LOADING:
-      return { ...state, loading: true };
+      return {...state, loading: true};
     case AUTH_SUCCESS:
-      return { ...state, loading: false, user: action.payload };
+      return {...state, loading: false, user: action.payload};
     case AUTH_TOKEN:
-      return { ...state, loading: false, userToken: action.payload };
+      return {...state, loading: false, userToken: action.payload};
     case AUTH_FAILURE:
-      return { ...state, loading: false };
+      return {...state, loading: false};
     default:
       return state;
   }

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {
   StyleSheet,
   TextInput,
@@ -9,10 +9,10 @@ import {
   Text,
   Platform,
 } from 'react-native';
-import { auth, signInWithEmailAndPassword } from '../../firebase';
-import { authSuccess } from '../../redux/auth/action_creators';
+import {auth, signInWithEmailAndPassword} from '../../firebase';
+import {authSuccess} from '../../redux/auth/action_creators';
 
-const isAndroid = () => Platform.OS === 'android' ? 'height' :'padding';
+const isAndroid = () => (Platform.OS === 'android' ? 'height' : 'padding');
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -21,28 +21,27 @@ const Login = () => {
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-    .then(userCrendentials => {
-      const user = userCrendentials.user;
-      dispatch(authSuccess(user));
-    })
-    .catch(error => alert(error.message));
+      .then(userCrendentials => {
+        const user = userCrendentials.user;
+        dispatch(authSuccess(user));
+      })
+      .catch(error => console.log(error.message));
   };
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={isAndroid()}
-    >
+    <KeyboardAvoidingView style={styles.container} behavior={isAndroid()}>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder='Email'
+          placeholder="Email"
           value={email}
-          onChangeText={text => setEmail(text)} />
+          onChangeText={text => setEmail(text)}
+        />
         <TextInput
           style={styles.input}
-          placeholder='Password'
+          placeholder="Password"
           value={password}
-          onChangeText={text => setPassword(text)} />
+          onChangeText={text => setPassword(text)}
+        />
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
@@ -50,16 +49,20 @@ const Login = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.footerContainer}>
-        <TouchableOpacity style={styles.linkButton} onPress={() => console.log('signup')}>
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => console.log('signup')}>
           <Text style={styles.linkButtonText}>Don't have an account?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.linkButton} onPress={() => console.log('signup')}>
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => console.log('signup')}>
           <Text style={styles.linkButtonText}>Forgot password?</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
-}
+};
 
 export default Login;
 
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    marginTop : 10,
+    marginTop: 10,
     paddingVertical: 10,
     paddingHorizontal: 15,
   },
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  footerContainer:{
+  footerContainer: {
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
@@ -114,5 +117,5 @@ const styles = StyleSheet.create({
 
   linkButtonText: {
     color: '#000',
-  }
+  },
 });

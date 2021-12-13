@@ -1,3 +1,3 @@
-const artistSelect = (state) => state.artist;
+const artistSelect = state => state.artist;
 
 export default artistSelect;

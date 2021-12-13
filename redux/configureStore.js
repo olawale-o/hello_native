@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from 'redux';
+import {createStore, combineReducers} from 'redux';
 import authReducer from './auth';
 import artistReducer from './artist';
 import composedEnhancers from './enhancers';
