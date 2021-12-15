@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {
-  StyleSheet,
   TextInput,
   View,
   KeyboardAvoidingView,
@@ -11,6 +10,7 @@ import {
   Pressable,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
+import styles from './styles';
 
 import {auth, signInWithEmailAndPassword} from '../../firebase';
 import {authSuccess} from '../../redux/auth/action_creators';
@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 const isAndroid = () => (Platform.OS === 'android' ? 'position' : 'padding');
 
-const Login = () => {
+const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +31,10 @@ const Login = () => {
         dispatch(authSuccess(user));
       })
       .catch(error => console.log(error.message));
+  };
+
+  const navigate = (route) => {
+    navigation.navigate(route);
   };
   return (
     <View style={styles.container}>
@@ -80,115 +84,16 @@ const Login = () => {
           <Text style={styles.linkText}>Forgot Password?</Text>
         </TouchableOpacity>
         </View>
-        <View style={styles.divider} />
-        <View style={styles.signupContainer}>
-          <Text style={styles.signupText}>Don't have an account?</Text>
-          <TouchableOpacity onPress={() => console.log('forgot')}>
-            <Text style={styles.linkText}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
+      </View>
+      <View style={styles.divider} />
+      <View style={styles.signupContainer}>
+        <Text style={styles.linkTextTitle}>Don't have an account?</Text>
+        <TouchableOpacity onPress={() => navigate('Signup')}>
+          <Text style={styles.linkText}>Sign up</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
 export default Login;
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    backgroundColor: '#fff',
-    padding: 20,
-  },
-
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  headerText: {
-    fontSize: 20,
-  },
-
-  socialButton: {
-    borderRadius: 10,
-    marginVertical: 25,
-    backgroundColor: '#F3F3F3',
-  },
-
-  socialButtonContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    opacity: 0.45,
-    alignItems: 'center',
-    padding: 10,
-  },
-
-  buttonText: {
-    color: '#000',
-    marginLeft: 10,
-    fontWeight: 'bold',
-  },
-
-  divider: {
-    height: 1,
-    backgroundColor: '#eee',
-    marginVertical: 10,
-  },
-
-  formContainer: {
-    paddingVertical: 15,
-  },
-
-  inputContainer: {
-    paddingVertical: 10,
-  },
-
-  label: {
-    fontWeight: 'bold',
-  },
-
-  input: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    marginTop: 10,
-    borderWidth: 2,
-    borderColor: '#eee',
-    paddingHorizontal: 10,
-  },
-
-  checkboxContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 15,
-  },
-
-  loginButton: {
-    backgroundColor: '#008AFF',
-    paddingVertical: 10,
-    borderRadius: 15,
-  },
-
-  loginButtonText: {
-    color: '#fff',
-    textAlign: 'center',
-  },
-  
-  forgotPasswordContainer: {
-    paddingVertical: 20,
-  },
-
-  linkText: {
-    color: '#008AFF',
-    textAlign: 'center',
-  },
-
-  signupContainer: {
-    display: 'flex',
-    alignItems: 'center',
-  }
-});
