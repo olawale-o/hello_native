@@ -15,7 +15,9 @@ import {auth, onAuthStateChanged} from '../firebase';
 import authSelector from '../redux/auth/authSelector';
 import Artists from './Artist/Artists';
 import Settings from './Setting/Settings';
+import Auth from './Auth/Auth';
 import Login from './Auth/Login';
+import Signup from './Auth/Signup';
 import SplashScreen from './SplashScreen';
 import {authLoading, authToken} from '../redux/auth/action_creators';
 const AuthDrawer = createDrawerNavigator();
@@ -29,6 +31,8 @@ const Main = () => {
     onAuthStateChanged(auth, user => {
       if (user != null) {
         dispatch(authToken(user.stsTokenManager.accessToken));
+      } else {
+        dispatch(authToken(null));
       }
     });
   }, [dispatch]);
@@ -41,7 +45,9 @@ const Main = () => {
     <NavigationContainer>
       {userToken === null ? (
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Auth" component={Auth} options={{headerShown: false}} />
+          <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
+          <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}} />
         </Stack.Navigator>
       ) : (
         <AuthDrawer.Navigator>
