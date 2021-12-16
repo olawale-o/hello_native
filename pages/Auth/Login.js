@@ -10,11 +10,12 @@ import {
   Pressable,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
+import Icon from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
 
 import {auth, signInWithEmailAndPassword} from '../../firebase';
 import {authSuccess} from '../../redux/auth/action_creators';
-import Icon from 'react-native-vector-icons/AntDesign';
+import {navigate} from './helper';
 
 const isAndroid = () => (Platform.OS === 'android' ? 'position' : 'padding');
 
@@ -33,14 +34,13 @@ const Login = ({navigation}) => {
       .catch(error => console.log(error.message));
   };
 
-  const navigate = (route) => {
-    navigation.navigate(route);
-  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Login</Text>
-        <Icon name="closecircleo" size={30} color="#86897D" />
+        <Pressable onPress={() => navigate(navigation, 'Auth')}>
+          <Icon name="closecircleo" size={30} color="#86897D" />
+        </Pressable>
       </View>
       <Pressable onPress={() => console.log('press')} style={styles.socialButton}>
         <View style={styles.socialButtonContainer}>
@@ -88,7 +88,7 @@ const Login = ({navigation}) => {
       <View style={styles.divider} />
       <View style={styles.signupContainer}>
         <Text style={styles.linkTextTitle}>Don't have an account?</Text>
-        <TouchableOpacity onPress={() => navigate('Signup')}>
+        <TouchableOpacity onPress={() => navigate(navigation, 'Signup')}>
           <Text style={styles.linkText}>Sign up</Text>
         </TouchableOpacity>
       </View>
