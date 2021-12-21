@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {
   Pressable,
   View,
@@ -8,13 +9,22 @@ import {
   Modal,
   Alert,
 } from 'react-native';
+import { auth } from '../../firebase';
+import {authLogout, authLoading} from '../../redux/auth/action_creators';
 
 const SettingList = () => {
+  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const data = [
     {name: 'Change username', action: () => {}},
     {name: 'Log out', action: () => setModalVisible(true)},
   ];
+  const logOut = () => {
+    dispatch(authLoading());
+    auth.signOut();
+    dispatch(authLogout());
+    setModalVisible(!modalVisible);
+  };
   return (
     <View style={styles.container}>
       <Modal
@@ -31,7 +41,7 @@ const SettingList = () => {
             <View style={styles.modalButtonContainer}>
               <Pressable
                 style={[styles.buttonModal, styles.yesButton]}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={logOut}>
                 <Text style={styles.textStyle}>Yes</Text>
               </Pressable>
               <Pressable
