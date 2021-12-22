@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   TextInput,
   View,
@@ -8,24 +8,28 @@ import {
   Text,
   Platform,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Icon from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
 
 import {auth, signInWithEmailAndPassword} from '../../firebase';
-import {authSuccess} from '../../redux/auth/action_creators';
+import {authSuccess, authLoading} from '../../redux/auth/action_creators';
+import authSelector from '../../redux/auth/authSelector';
 import {navigate} from './helper';
 
 const isAndroid = () => (Platform.OS === 'android' ? 'position' : 'padding');
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
+  const {loading} = useSelector(authSelector);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSelected, setIsSelected] = useState(false);
 
   const handleLogin = () => {
+    dispatch(authLoading());
     signInWithEmailAndPassword(auth, email, password)
       .then(userCrendentials => {
         const user = userCrendentials.user;
@@ -78,11 +82,13 @@ const Login = ({navigation}) => {
           />
           <Text style={styles.label}>Remember Me</Text>
         </View>
-        <Pressable
-          onPress={() => console.log('login')}
-          style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Log in</Text>
-        </Pressable>
+        {loading ? (
+          <ActivityIndicator size="large" color="#008AFF" />
+        ) : (
+          <Pressable onPress={handleLogin} style={styles.loginButton}>
+            <Text style={styles.loginButtonText}>Log in</Text>
+          </Pressable>
+        )}
         <View style={styles.forgotPasswordContainer}>
           <TouchableOpacity onPress={() => console.log('forgot')}>
             <Text style={styles.linkText}>Forgot Password?</Text>
