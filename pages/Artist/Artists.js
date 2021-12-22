@@ -9,7 +9,7 @@ const optionsStyle = {
 };
 
 const Artists = () => (
-  <ArtistStack.Navigator>
+  <ArtistStack.Navigator initialRouteName="ArtistList">
     <ArtistStack.Screen
       name="ArtistList"
       component={ArtistListPage}

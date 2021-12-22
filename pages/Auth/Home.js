@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
-import { navigate } from './helper';
+import {navigate} from './helper';
 
 const Home = ({navigation}) => {
   return (
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
-});  
+});

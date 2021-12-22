@@ -8,8 +8,16 @@ const Drawer = createDrawerNavigator();
 const DashBoard = () => {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="Artists" component={Artists} options={{ headerShown: false }} />
-      <Drawer.Screen name="Map" component={Map} options={{ headerShown: false }} />
+      <Drawer.Screen
+        name="Artists"
+        component={Artists}
+        options={{headerShown: false}}
+      />
+      <Drawer.Screen
+        name="Map"
+        component={Map}
+        options={{headerShown: false}}
+      />
     </Drawer.Navigator>
   );
 };

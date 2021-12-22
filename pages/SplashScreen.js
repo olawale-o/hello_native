@@ -11,13 +11,13 @@ const SplashScreen = ({navigation}) => {
     onAuthStateChanged(auth, user => {
       if (user != null) {
         dispatch(authToken(user.stsTokenManager.accessToken));
-        navigation.replace('Settings');
+        navigation.replace('Dashboard');
       } else {
         dispatch(authToken(null));
         navigation.replace('Auth');
       }
     });
-  }, [dispatch]);
+  }, [navigation, dispatch]);
   return (
     <View style={styles.container}>
       <View style={styles.content}>

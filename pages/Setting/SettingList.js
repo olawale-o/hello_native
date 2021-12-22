@@ -16,7 +16,8 @@ const SettingList = () => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const data = [
-    {name: 'Change username', action: () => {}},
+    {name: 'Account', action: () => {}},
+    {name: 'Setting and privacy', action: () => {}},
     {name: 'Log out', action: () => setModalVisible(true)},
   ];
   const logOut = () => {
@@ -68,18 +69,16 @@ const SettingList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
     paddingBottom: 10,
   },
 
   button: {
-    backgroundColor: 'white',
     padding: 10,
-    borderBottomWidth: 1,
+    marginVertical: 5,
   },
 
   text: {
-    fontSize: 20,
+    fontSize: 18,
   },
 
   modalView: {
