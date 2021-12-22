@@ -3,7 +3,6 @@ import {useDispatch} from 'react-redux';
 import {
   TextInput,
   View,
-  KeyboardAvoidingView,
   TouchableOpacity,
   Text,
   Platform,
@@ -15,9 +14,9 @@ import styles from './styles';
 
 import {auth, signInWithEmailAndPassword} from '../../firebase';
 import {authSuccess} from '../../redux/auth/action_creators';
-import { navigate } from './helper';
+import {navigate} from './helper';
 
-const isAndroid = () => (Platform.OS === 'android' ? 'position' : 'padding');
+// const isAndroid = () => (Platform.OS === 'android' ? 'position' : 'padding');
 
 const SignUp = ({navigation}) => {
   const dispatch = useDispatch();
@@ -42,9 +41,11 @@ const SignUp = ({navigation}) => {
           <Icon name="closecircleo" size={30} color="#86897D" />
         </Pressable>
       </View>
-      <Pressable onPress={() => console.log('press')} style={styles.socialButton}>
+      <Pressable
+        onPress={() => console.log('press')}
+        style={styles.socialButton}>
         <View style={styles.socialButtonContainer}>
-          <Icon name="google" size={15} color="#86897D"/>
+          <Icon name="google" size={15} color="#86897D" />
           <Text style={styles.buttonText}>Sign up with Google</Text>
         </View>
       </Pressable>
@@ -80,17 +81,17 @@ const SignUp = ({navigation}) => {
         <View style={styles.checkboxContainer}>
           <CheckBox
             value={isSelected}
-            onValueChange={(newValue) => setIsSelected(newValue)}
+            onValueChange={newValue => setIsSelected(newValue)}
             style={styles.checkbox}
           />
           <Text style={styles.label}>
-              I agree with {' '}
-              <Text style={styles.linkText}>Terms</Text>{' '}
-              and {' '}
-              <Text style={styles.linkText}>Privacy</Text>
+            I agree with <Text style={styles.linkText}>Terms</Text> and
+            <Text style={styles.linkText}>Privacy</Text>
           </Text>
         </View>
-        <Pressable onPress={() => console.log('login')} style={styles.loginButton}>
+        <Pressable
+          onPress={() => console.log('login')}
+          style={styles.loginButton}>
           <Text style={styles.loginButtonText}>Sign up</Text>
         </Pressable>
       </View>

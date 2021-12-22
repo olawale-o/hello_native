@@ -9,7 +9,7 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import { auth } from '../../firebase';
+import {auth} from '../../firebase';
 import {authLogout, authLoading} from '../../redux/auth/action_creators';
 
 const SettingList = () => {

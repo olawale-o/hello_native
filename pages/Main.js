@@ -45,9 +45,21 @@ const Main = () => {
     <NavigationContainer>
       {userToken === null ? (
         <Stack.Navigator>
-          <Stack.Screen name="Auth" component={Auth} options={{headerShown: false}} />
-          <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-          <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}} />
+          <Stack.Screen
+            name="Auth"
+            component={Auth}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       ) : (
         <AuthDrawer.Navigator>

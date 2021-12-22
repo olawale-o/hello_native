@@ -42,9 +42,11 @@ const Login = ({navigation}) => {
           <Icon name="closecircleo" size={30} color="#86897D" />
         </Pressable>
       </View>
-      <Pressable onPress={() => console.log('press')} style={styles.socialButton}>
+      <Pressable
+        onPress={() => console.log('press')}
+        style={styles.socialButton}>
         <View style={styles.socialButtonContainer}>
-          <Icon name="google" size={15} color="#86897D"/>
+          <Icon name="google" size={15} color="#86897D" />
           <Text style={styles.buttonText}>Log in with Google</Text>
         </View>
       </Pressable>
@@ -71,18 +73,20 @@ const Login = ({navigation}) => {
         <View style={styles.checkboxContainer}>
           <CheckBox
             value={isSelected}
-            onValueChange={(newValue) => setIsSelected(newValue)}
+            onValueChange={newValue => setIsSelected(newValue)}
             style={styles.checkbox}
           />
           <Text style={styles.label}>Remember Me</Text>
         </View>
-        <Pressable onPress={() => console.log('login')} style={styles.loginButton}>
+        <Pressable
+          onPress={() => console.log('login')}
+          style={styles.loginButton}>
           <Text style={styles.loginButtonText}>Log in</Text>
         </Pressable>
         <View style={styles.forgotPasswordContainer}>
-        <TouchableOpacity onPress={() => console.log('forgot')}>
-          <Text style={styles.linkText}>Forgot Password?</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => console.log('forgot')}>
+            <Text style={styles.linkText}>Forgot Password?</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.divider} />

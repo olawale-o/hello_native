@@ -1,21 +1,25 @@
-import React from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import React from 'react';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {navigate} from './helper';
 
 const Auth = ({navigation}) => {
   return (
     <View style={styles.container}>
-        <View style={styles.buttonsContainer}>
-          <Pressable style={styles.button} onPress={() => navigate(navigation, 'Login')}>
-            <Text style={styles.buttonText}>Log in</Text>
-          </Pressable>
-          <Pressable style={styles.button} onPress={() => navigate(navigation, 'Signup')}>
-            <Text style={styles.buttonText}>Sign up</Text>
-          </Pressable>
-        </View>
+      <View style={styles.buttonsContainer}>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigate(navigation, 'Login')}>
+          <Text style={styles.buttonText}>Log in</Text>
+        </Pressable>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigate(navigation, 'Signup')}>
+          <Text style={styles.buttonText}>Sign up</Text>
+        </Pressable>
+      </View>
     </View>
   );
-}
+};
 
 export default Auth;
 
@@ -42,7 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: '100%',
   },
-  
+
   buttonText: {
     color: '#fff',
     textAlign: 'center',
