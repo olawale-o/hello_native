@@ -42,7 +42,7 @@ const Login = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Login</Text>
-        <Pressable onPress={() => navigate(navigation, 'Auth')}>
+        <Pressable onPress={() => navigate(navigation, 'Home')}>
           <Icon name="closecircleo" size={30} color="#86897D" />
         </Pressable>
       </View>
