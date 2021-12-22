@@ -1,17 +1,35 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 import {StyleSheet, View, Text, Image} from 'react-native';
+import {auth, onAuthStateChanged} from '../firebase';
+import {authToken, authLoading} from '../redux/auth/action_creators';
 
-const SplashScreen = () => (
-  <View style={styles.container}>
-    <View style={styles.content}>
-      <Image
-        source={require('../assets/images/logo.png')}
-        style={styles.logo}
-      />
-      <Text style={styles.text}>Native</Text>
+const SplashScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(authLoading());
+    onAuthStateChanged(auth, user => {
+      if (user != null) {
+        dispatch(authToken(user.stsTokenManager.accessToken));
+        navigation.replace('Settings');
+      } else {
+        dispatch(authToken(null));
+        navigation.replace('Auth');
+      }
+    });
+  }, [dispatch]);
+  return (
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.text}>Native</Text>
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
