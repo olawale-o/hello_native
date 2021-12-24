@@ -14,7 +14,7 @@ const coordinates = [
     name: 'Maple wood oko-oba',
   },
   {
-    latLng: {   
+    latLng: {
       latitude: 6.6342803,
       longitude: 3.2921889,
     },
