@@ -49,14 +49,6 @@ const MapScreen = () => {
       }
     }
   }, [getCurrentLocation]);
-  // const requestLocationPermission = async () => {
-  //   if (Platform.OS === 'android') {
-  //     const response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-  //     if (response === 'granted') {
-  //       getCurrentLocation();
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     (async () => {
