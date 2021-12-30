@@ -4,6 +4,7 @@ import MapView, {Marker, Polygon, Circle} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import coordinates from '../../constants/coordinates';
+import CustomSlider from '../../components/CustomSlider';
 
 const MapScreen = () => {
   const _map = useRef(null);
@@ -16,6 +17,7 @@ const MapScreen = () => {
     },
   });
   const [error, setError] = React.useState(null);
+  const [radius, setRadius] = React.useState(500);
 
   const errorCallBack = useCallback(() => {
     setError(error.message);
@@ -59,6 +61,11 @@ const MapScreen = () => {
     }
   }, [getCurrentLocation]);
 
+  const handleRadiusChange = (value) => {
+    console.log(...value);
+    setRadius(...value);
+  };
+
   useEffect(() => {
     console.log('MapScreen useEffect');
     (async () => {
@@ -98,13 +105,14 @@ const MapScreen = () => {
         />
         <Circle
           center={{ ...coordinates[3].latLng }}
-          radius={1000}
+          radius={radius}
           strokeWidth={5}
           fillColor='rgba(255,0,0,0.5)'
           zIndex={1}
         />
       </MapView>
       <View style={styles.mapOverlay} />
+      <CustomSlider radius={radius} valueChange={handleRadiusChange} />
     </View>
   );
 };
