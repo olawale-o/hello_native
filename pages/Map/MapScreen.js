@@ -1,6 +1,6 @@
 import React, {useEffect, useCallback, useRef} from 'react';
 import {StyleSheet, Platform, View, Dimensions} from 'react-native';
-import MapView, {Marker, Polygon} from 'react-native-maps';
+import MapView, {Marker, Polygon, Circle} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import coordinates from '../../constants/coordinates';
@@ -95,6 +95,13 @@ const MapScreen = () => {
           fillColor='rgba(255,0,0,0.5)'
           strokeColor='#000'
           strokeWidth={5}
+        />
+        <Circle
+          center={{ ...coordinates[3].latLng }}
+          radius={1000}
+          strokeWidth={5}
+          fillColor='rgba(255,0,0,0.5)'
+          zIndex={1}
         />
       </MapView>
       <View style={styles.mapOverlay} />
