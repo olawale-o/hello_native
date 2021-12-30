@@ -15,10 +15,10 @@ const coordinates = [
   },
   {
     latLng: {
-      latitude: 6.6342803,
-      longitude: 3.2921889,
+      latitude: 6.5819806,
+      longitude: 3.321633,
     },
-    name: 'Ifako hospital agege',
+    name: 'UBA',
   },
   {
     latLng: {

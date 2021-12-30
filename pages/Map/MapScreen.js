@@ -1,6 +1,6 @@
 import React, {useEffect, useCallback, useRef} from 'react';
 import {StyleSheet, Platform, View, Dimensions} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, Polygon} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import coordinates from '../../constants/coordinates';
@@ -86,6 +86,16 @@ const MapScreen = () => {
             title={coordinate.name}
           />
         ))}
+        <Polygon coordinates={[
+          {...coordinates[0].latLng},
+          {...coordinates[2].latLng},
+          {...coordinates[3].latLng},
+          {...coordinates[1].latLng}]}
+          geodesic={true}
+          fillColor='rgba(255,0,0,0.5)'
+          strokeColor='#000'
+          strokeWidth={5}
+        />
       </MapView>
       <View style={styles.mapOverlay} />
     </View>
