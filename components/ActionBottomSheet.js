@@ -7,7 +7,7 @@ import FloatingButton from './FloatingButton';
 
 const ActionBottomSheet = ({children}) => {
   const bottomSheetRef = React.useRef(null);
-  const [isVisible, setIsVisible] = React.useState(true);
+  const [isVisible, setIsVisible] = React.useState(false);
 
   // variables
   const snapPoints = React.useMemo(() => [1, '25%'], []);
@@ -41,7 +41,7 @@ const ActionBottomSheet = ({children}) => {
       </FloatingButton>
       <BottomSheet
         ref={bottomSheetRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         enablePanDownToClose={true}
