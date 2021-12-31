@@ -4,8 +4,8 @@ import MapView, {Marker, Polygon, Circle} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import coordinates from '../../constants/coordinates';
-import CustomSlider from '../../components/CustomSlider';
 import ActionBottomSheet from '../../components/ActionBottomSheet';
+import BottomSheetContent from '../../components/BottomSheetContent';
 
 const MapScreen = () => {
   const _map = useRef(null);
@@ -19,7 +19,8 @@ const MapScreen = () => {
   });
   const [error, setError] = React.useState(null);
   const [radius, setRadius] = React.useState(500);
-
+  const [enableLocation, setEnableLocation] = React.useState(false);
+  const [enableTraffic, setEnableTraffic] = React.useState(false);
   const errorCallBack = useCallback(() => {
     setError(error.message);
   }, [error]);
@@ -79,7 +80,7 @@ const MapScreen = () => {
       <MapView
         style={styles.mapStyle}
         initialRegion={region.initialRegion}
-        showsUserLocation={true}
+        showsUserLocation={enableLocation}
         showsMyLocationButton={true}
         showsPointsOfInterest={false}
         zoomControlEnabled={true}
@@ -87,8 +88,7 @@ const MapScreen = () => {
         onMapReady={() => console.log('Map is ready!')}
         onRegionChange={() => console.log('change region')}
         onRegionChangeComplete={() => console.log('region changed')}
-        showsTraffic={true}
-        loadingEnabled={true}
+        showsTraffic={enableTraffic}
         >
         {coordinates.map(coordinate => (
           <Marker
@@ -117,20 +117,14 @@ const MapScreen = () => {
       </MapView>
       <View style={styles.mapOverlay} />
       <ActionBottomSheet>
-        <View style={styles.sheetContent}>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.label}>Radius:</Text>
-            <CustomSlider radius={radius} valueChange={handleRadiusChange}/>
-          </View>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.label}>Show Location:</Text>
-            <Switch value={true} onValueChange={() => {}} />
-          </View>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.label}>Show Traffic:</Text>
-            <Switch value={true} onValueChange={() => {}} />
-          </View>
-        </View>
+        <BottomSheetContent
+          radiusChange={handleRadiusChange}
+          radius={radius}
+          enableTraffic={enableTraffic}
+          trafficChange={() => setEnableTraffic(prevState => !prevState)}
+          enableLocation={enableLocation}
+          locationChange={() => setEnableLocation(prevState => !prevState)}
+        />
       </ActionBottomSheet>
     </View>
   );
@@ -152,22 +146,5 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     width: 25,
     opacity: 0.0,
-  },
-  sheetContent: {
-    flex: 1,
-    width: Dimensions.get('window').width,
-    paddingHorizontal: 20,
-  },
-  label: {
-    fontSize: 16,
-    marginRight: 10,
-    fontWeight: 'bold',
-  },
-  fieldContainer: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 5,
   },
 });
