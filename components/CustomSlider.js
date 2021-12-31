@@ -21,7 +21,7 @@ export default CustomSlider;
 
 const styles = StyleSheet.create({
   radiusSlider: {
-    backgroundColor: '#fff',
-    marginHorizontal: 30,
-  }
+    width: 'auto',
+    flexGrow: 1,
+  },
 });

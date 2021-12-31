@@ -1,10 +1,11 @@
 import React, {useEffect, useCallback, useRef} from 'react';
-import {StyleSheet, Platform, View, Dimensions} from 'react-native';
+import {StyleSheet, Platform, View, Dimensions, Text, Switch} from 'react-native';
 import MapView, {Marker, Polygon, Circle} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import coordinates from '../../constants/coordinates';
 import CustomSlider from '../../components/CustomSlider';
+import ActionBottomSheet from '../../components/ActionBottomSheet';
 
 const MapScreen = () => {
   const _map = useRef(null);
@@ -85,7 +86,10 @@ const MapScreen = () => {
         ref={_map}
         onMapReady={() => console.log('Map is ready!')}
         onRegionChange={() => console.log('change region')}
-        onRegionChangeComplete={() => console.log('region changed')}>
+        onRegionChangeComplete={() => console.log('region changed')}
+        showsTraffic={true}
+        loadingEnabled={true}
+        >
         {coordinates.map(coordinate => (
           <Marker
             key={`key_${coordinate.latLng.latitude}_${coordinate.latLng.longitude}`}
@@ -112,7 +116,22 @@ const MapScreen = () => {
         />
       </MapView>
       <View style={styles.mapOverlay} />
-      <CustomSlider radius={radius} valueChange={handleRadiusChange} />
+      <ActionBottomSheet>
+        <View style={styles.sheetContent}>
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>Radius:</Text>
+            <CustomSlider radius={radius} valueChange={handleRadiusChange}/>
+          </View>
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>Show Location:</Text>
+            <Switch value={true} onValueChange={() => {}} />
+          </View>
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>Show Traffic:</Text>
+            <Switch value={true} onValueChange={() => {}} />
+          </View>
+        </View>
+      </ActionBottomSheet>
     </View>
   );
 };
@@ -133,5 +152,22 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     width: 25,
     opacity: 0.0,
+  },
+  sheetContent: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    paddingHorizontal: 20,
+  },
+  label: {
+    fontSize: 16,
+    marginRight: 10,
+    fontWeight: 'bold',
+  },
+  fieldContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 5,
   },
 });
