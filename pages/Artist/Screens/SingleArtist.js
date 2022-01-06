@@ -58,6 +58,7 @@ const styleSheets = StyleSheet.create({
   text: {
     color: '#eee',
     fontSize: 20,
+    fontFamily: 'Quicksand-Regular',
   },
 
   smText: {
