@@ -8,7 +8,7 @@ const SingleArtist = ({artist, navigation}) => {
       <View style={styleSheets.SingleArtist}>
         <Image style={styleSheets.img} source={{uri: imgUri}} />
         <Pressable
-          onPress={() => navigation.navigate('Artist', {name: artist.name})}>
+          onPress={() => navigation.navigate('Artist', {name: artist.name, id: artist.id})}>
           <View>
             <Text style={styleSheets.text}>{artist.name}</Text>
             <Text style={[styleSheets.text, styleSheets.smText]}>

@@ -15,7 +15,11 @@ const Artists = () => (
       component={ArtistListPage}
       options={optionsStyle}
     />
-    <ArtistStack.Screen name="Artist" component={ArtistDetailPage} />
+    <ArtistStack.Screen
+      name="Artist"
+      component={ArtistDetailPage}
+      options={({route}) => ({title: route.params.name, id: route.params.id})}
+    />
   </ArtistStack.Navigator>
 );
 
