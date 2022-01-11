@@ -3,23 +3,24 @@ import {useDispatch} from 'react-redux';
 import {
   Pressable,
   View,
-  FlatList,
   StyleSheet,
   Text,
   Modal,
   Alert,
+  TouchableOpacity,
+  ScrollView,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {auth} from '../../firebase';
 import {authLogout, authLoading} from '../../redux/auth/action_creators';
 
-const SettingList = () => {
+const SettingList = ({navigation}) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
-  const data = [
-    {name: 'Account', action: () => {}},
-    {name: 'Setting and privacy', action: () => {}},
-    {name: 'Log out', action: () => setModalVisible(true)},
-  ];
   const logOut = () => {
     dispatch(authLoading());
     auth.signOut();
@@ -28,6 +29,7 @@ const SettingList = () => {
   };
   return (
     <View style={styles.container}>
+      <Text style={styles.pageTitle}>Settings</Text>
       <Modal
         animationType="slide"
         transparent={true}
@@ -54,14 +56,63 @@ const SettingList = () => {
           </View>
         </View>
       </Modal>
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <Pressable style={styles.button} onPress={item.action}>
-            <Text style={styles.text}>{item.name}</Text>
-          </Pressable>
-        )}
-      />
+      <ScrollView>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <View style={styles.buttonContentLeft}>
+            <MaterialIcons name="block" size={24} color="white" style={{marginRight: 10}} />
+            <Text style={styles.text}>Blocked Accounts</Text>
+          </View>
+          <Ionicons name="ios-chevron-forward-sharp" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <View style={styles.buttonContentLeft}>
+            <AntDesign name="profile" size={24} color="white" style={{marginRight: 10}} />
+            <Text style={styles.text}>Account Information</Text>
+          </View>
+          <Ionicons name="ios-chevron-forward-sharp" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.push('Notifications')}>
+          <View style={styles.buttonContentLeft}>
+            <Ionicons name="ios-notifications" size={24} color="white" style={{marginRight: 10}} />
+            <Text style={styles.text}>Notifications</Text>
+          </View>
+          <Ionicons name="ios-chevron-forward-sharp" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <View style={styles.buttonContentLeft}>
+            <MaterialIcons name="privacy-tip" size={24} color="white" style={{marginRight: 10}} />
+            <Text style={styles.text}>Privacy Policy</Text>
+          </View>
+          <Ionicons name="ios-chevron-forward-sharp" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <View style={styles.buttonContentLeft}>
+            <FontAwesome5 name="shapes" size={24} color="white" style={{marginRight: 10}} />
+            <Text style={styles.text}>Terms of service</Text>
+          </View>
+          <Ionicons name="ios-chevron-forward-sharp" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <View style={styles.buttonContentLeft}>
+            <Ionicons name="document-text-outline" size={24} color="white" style={{marginRight: 10}} />
+            <Text style={styles.text}>Community Guidelines</Text>
+          </View>
+          <Ionicons name="ios-chevron-forward-sharp" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <View style={styles.buttonContentLeft}>
+            <SimpleLineIcons name="question" size={24} color="white" style={{marginRight: 10}} />
+            <Text style={styles.text}>Support</Text>
+          </View>
+          <Ionicons name="ios-chevron-forward-sharp" size={24} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <View style={styles.buttonContentLeft}>
+            <MaterialIcons name="exit-to-app" size={24} color="red" style={{marginRight: 10}} />
+            <Text style={[styles.text, {color: 'red'}]}>Log out</Text>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
@@ -69,16 +120,33 @@ const SettingList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 10,
+    padding: 20,
+    backgroundColor: '#20232a',
+  },
+
+  pageTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 
   button: {
-    padding: 10,
-    marginVertical: 5,
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: '#7689B6',
+    borderRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 
   text: {
     fontSize: 18,
+    color: '#eee',
+    fontFamily: 'Oxygen-Bold',
+  },
+
+  buttonContentLeft: {
+    flexDirection: 'row',
   },
 
   modalView: {
