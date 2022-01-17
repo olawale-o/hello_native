@@ -1,13 +1,14 @@
 import React, {useEffect, useCallback, useRef} from 'react';
-import {StyleSheet, Platform, View, Dimensions, Text, Switch} from 'react-native';
+import {StyleSheet, Platform, View, Dimensions, Text, TouchableOpacity} from 'react-native';
 import MapView, {Marker, Polygon, Circle} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import coordinates from '../../constants/coordinates';
 import ActionBottomSheet from '../../components/ActionBottomSheet';
 import BottomSheetContent from '../../components/BottomSheetContent';
+const { width, height } = Dimensions.get('window');
 
-const MapScreen = () => {
+const MapScreen = ({navigation}) => {
   const _map = useRef(null);
   const [region, setRegion] = React.useState({
     initialRegion: {
@@ -77,6 +78,12 @@ const MapScreen = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('AddressSearchScreen') }
+        style={styles.addressButton}
+      >
+        <Text style={styles.addressText}>Lagos, Agege</Text>
+      </TouchableOpacity>
       <MapView
         style={styles.mapStyle}
         initialRegion={region.initialRegion}
@@ -133,6 +140,20 @@ const MapScreen = () => {
 export default MapScreen;
 
 const styles = StyleSheet.create({
+  addressButton: {
+    position: 'absolute',
+    top: 10,
+    left: 0,
+    width: width - 20,
+    marginHorizontal: 10,
+    backgroundColor: '#fff',
+    zIndex: 10,
+    padding: 10,
+  },
+  addressText: {
+    color: '#000',
+    fontSize: 16,
+  },
   container: {
     ...StyleSheet.absoluteFillObject,
   },
@@ -143,7 +164,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    height: Dimensions.get('window').height,
+    height: height,
     width: 25,
     opacity: 0.0,
   },

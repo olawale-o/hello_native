@@ -1,6 +1,6 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import MapScreen from '../Map/MapScreen';
+import Map from '../Map/Map';
 import Artists from '../Artist/Artists';
 import Settings from '../Setting/Settings';
 
@@ -10,13 +10,13 @@ const DashBoard = () => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen
-        name="Artists"
-        component={Artists}
+        name="Map"
+        component={Map}
         options={{headerShown: false}}
       />
       <Drawer.Screen
-        name="Map"
-        component={MapScreen}
+        name="Artists"
+        component={Artists}
         options={{headerShown: false}}
       />
       <Drawer.Screen
