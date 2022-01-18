@@ -6,9 +6,11 @@ import {request, PERMISSIONS} from 'react-native-permissions';
 import coordinates from '../../constants/coordinates';
 import ActionBottomSheet from '../../components/ActionBottomSheet';
 import BottomSheetContent from '../../components/BottomSheetContent';
+import {AddressContext} from '../../context/addressContext';
 const { width, height } = Dimensions.get('window');
 
 const MapScreen = ({navigation}) => {
+  const { address } = React.useContext(AddressContext);
   const _map = useRef(null);
   const [region, setRegion] = React.useState({
     initialRegion: {
@@ -83,7 +85,7 @@ const MapScreen = ({navigation}) => {
         style={styles.addressButton}
         activeOpacity={1}
       >
-        <Text style={styles.addressText}>Lagos, Agege</Text>
+        <Text style={styles.addressText}>{address}</Text>
       </TouchableOpacity>
       <MapView
         style={styles.mapStyle}

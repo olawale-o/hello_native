@@ -3,8 +3,10 @@ import { View, StyleSheet, Dimensions, Pressable} from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {GOOGLE_MAP_KEY} from '@env';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import { AddressContext } from '../../context/addressContext';
 navigator.geolocation = require('react-native-geolocation-service');
 const { width } = Dimensions.get('window');
+
 
 const LeftButton = ({navigation}) => {
   return (
@@ -15,6 +17,7 @@ const LeftButton = ({navigation}) => {
 }
 
 const AddressSearchScreen = ({navigation})  => {
+  const { updateAddress } = React.useContext(AddressContext);
   return (
     <View style={{
       flex: 1,
@@ -29,8 +32,8 @@ const AddressSearchScreen = ({navigation})  => {
         }}
         onFail={error => console.error(error)}
         onPress={(data, details = null) => {
-          // 'details' is provided when fetchDetails = true
-          console.log(data, details);
+          updateAddress(data.description);
+          navigation.goBack();
         }}
         preProcess={(data) => data.toLowerCase()}
         renderLeftButton={() => <LeftButton navigation={navigation} />}
