@@ -81,6 +81,7 @@ const MapScreen = ({navigation}) => {
       <TouchableOpacity
         onPress={() => navigation.navigate('AddressSearchScreen') }
         style={styles.addressButton}
+        activeOpacity={1}
       >
         <Text style={styles.addressText}>Lagos, Agege</Text>
       </TouchableOpacity>
