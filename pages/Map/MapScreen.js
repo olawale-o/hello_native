@@ -9,15 +9,17 @@ import BottomSheetContent from '../../components/BottomSheetContent';
 import {AddressContext} from '../../context/addressContext';
 const { width, height } = Dimensions.get('window');
 
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = 0.015;
 const MapScreen = ({navigation}) => {
-  const { address } = React.useContext(AddressContext);
+  const { address, location } = React.useContext(AddressContext);
   const _map = useRef(null);
   const [region, setRegion] = React.useState({
     initialRegion: {
       latitude: 6.5963,
       longitude: 3.346,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.015,
+      latitudeDelta: LATITUDE_DELTA,
+      longitudeDelta: LONGITUDE_DELTA,
     },
   });
   const [error, setError] = React.useState(null);
@@ -51,10 +53,10 @@ const MapScreen = ({navigation}) => {
       timeout: 20000,
       maximumAge: 1000,
     });
-    _map.current.animateToRegion(
-      {...region.initialRegion, latitude: 6.625428, longitude: 3.2872138},
-      5000,
-    );
+    // _map.current.animateToRegion(
+    //   {...region.initialRegion, latitude: 6.625428, longitude: 3.2872138},
+    //   5000,
+    // );
   }, [successCallBack, errorCallBack]);
 
   const requestLocationPermission = useCallback(async () => {
@@ -78,6 +80,10 @@ const MapScreen = ({navigation}) => {
     })();
   }, [requestLocationPermission]);
 
+  useEffect(() => {
+    console.log(location);
+    _map.current.animateToRegion(location, 5000,)
+  }, [address]);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -100,6 +106,10 @@ const MapScreen = ({navigation}) => {
         onRegionChangeComplete={() => console.log('region changed')}
         showsTraffic={enableTraffic}
         >
+        {/* <Marker coordinate={{
+          latitude: location.latitdude,
+          longitude: location.longitude,
+        }} /> */}
         {coordinates.map(coordinate => (
           <Marker
             key={`key_${coordinate.latLng.latitude}_${coordinate.latLng.longitude}`}

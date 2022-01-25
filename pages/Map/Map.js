@@ -8,14 +8,23 @@ const MapStack = createStackNavigator();
 
 
 const Map = () => {
-  const [address, setAddress] = React.useState('old address');
+  const [address, setAddress] = React.useState('');
+  const [location, setLocation] = React.useState({
+    latitdude: 0.0,
+    longitude: 0.0,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.015,
+  });
   return (
     <AddressContext.Provider value={
       {
         address,
+        location,
         updateAddress: (newAddress) => {
-          console.log(newAddress);
           setAddress(newAddress);
+        },
+        updateLocation: (newLocation) => {
+          setLocation(newLocation);
         }
       }
     }>

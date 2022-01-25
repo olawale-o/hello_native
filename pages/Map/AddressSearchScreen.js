@@ -17,7 +17,7 @@ const LeftButton = ({navigation}) => {
 }
 
 const AddressSearchScreen = ({navigation})  => {
-  const { updateAddress } = React.useContext(AddressContext);
+  const { updateAddress, updateLocation } = React.useContext(AddressContext);
   return (
     <View style={{
       flex: 1,
@@ -32,6 +32,12 @@ const AddressSearchScreen = ({navigation})  => {
         }}
         onFail={error => console.error(error)}
         onPress={(data, details = null) => {
+          updateLocation({
+            latitude: details.geometry.location.lat,
+            longitude: details.geometry.location.lng,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.015,
+          });
           updateAddress(data.description);
           navigation.goBack();
         }}
