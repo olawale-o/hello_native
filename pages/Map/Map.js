@@ -10,7 +10,7 @@ const MapStack = createStackNavigator();
 const Map = () => {
   const [address, setAddress] = React.useState('');
   const [location, setLocation] = React.useState({
-    latitdude: 0.0,
+    latitude: 0.0,
     longitude: 0.0,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.015,

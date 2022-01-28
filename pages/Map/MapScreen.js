@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useRef} from 'react';
+import React from 'react';
 import {StyleSheet, Platform, View, Dimensions, Text, TouchableOpacity} from 'react-native';
 import MapView, {Marker, Polygon, Circle} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
@@ -7,13 +7,36 @@ import coordinates from '../../constants/coordinates';
 import ActionBottomSheet from '../../components/ActionBottomSheet';
 import BottomSheetContent from '../../components/BottomSheetContent';
 import {AddressContext} from '../../context/addressContext';
+import FloatingButton from '../../components/FloatingButton';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 const { width, height } = Dimensions.get('window');
 
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = 0.015;
 const MapScreen = ({navigation}) => {
   const { address, location } = React.useContext(AddressContext);
-  const _map = useRef(null);
+  const _map = React.useRef(null);
+  const bottomSheetRef = React.useRef(null);
+  // const addressMemo = React.useMemo(() => address, [address]);
+  const [isVisible, setIsVisible] = React.useState(false);
+  const snapPoints = React.useMemo(() => [1, '25%'], []);
+
+  // callbacks
+  const handleSheetChanges = React.useCallback((index) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const handleSnapOpen = React.useCallback((index) => {
+    setIsVisible(true);
+    console.log('bottomSheetRef', bottomSheetRef.current);
+    bottomSheetRef.current?.snapToIndex(index);
+  });
+
+  const handleSnapClose = React.useCallback(() => {
+    bottomSheetRef.current?.close();
+    setIsVisible(false);
+  } , []);
+
   const [region, setRegion] = React.useState({
     initialRegion: {
       latitude: 6.5963,
@@ -26,11 +49,11 @@ const MapScreen = ({navigation}) => {
   const [radius, setRadius] = React.useState(500);
   const [enableLocation, setEnableLocation] = React.useState(false);
   const [enableTraffic, setEnableTraffic] = React.useState(false);
-  const errorCallBack = useCallback(() => {
+  const errorCallBack = React.useCallback(() => {
     setError(error.message);
   }, [error]);
 
-  const successCallBack = useCallback(
+  const successCallBack = React.useCallback(
     position => {
       const {latitude, longitude} = position.coords;
       setRegion(prevRegion => {
@@ -47,19 +70,15 @@ const MapScreen = ({navigation}) => {
     [setRegion],
   );
 
-  const getCurrentLocation = useCallback(() => {
+  const getCurrentLocation = React.useCallback(() => {
     Geolocation.getCurrentPosition(successCallBack, errorCallBack, {
       enableHighAccuracy: true,
       timeout: 20000,
       maximumAge: 1000,
     });
-    // _map.current.animateToRegion(
-    //   {...region.initialRegion, latitude: 6.625428, longitude: 3.2872138},
-    //   5000,
-    // );
   }, [successCallBack, errorCallBack]);
 
-  const requestLocationPermission = useCallback(async () => {
+  const requestLocationPermission = React.useCallback(async () => {
     if (Platform.OS === 'android') {
       const response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
       if (response === 'granted') {
@@ -73,26 +92,18 @@ const MapScreen = ({navigation}) => {
     setRadius(...value);
   };
 
-  useEffect(() => {
-    console.log('MapScreen useEffect');
+  React.useEffect(() => {
     (async () => {
       requestLocationPermission();
     })();
   }, [requestLocationPermission]);
 
-  useEffect(() => {
-    console.log(location);
+  React.useEffect(() => {
     _map.current.animateToRegion(location, 5000,)
   }, [address]);
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('AddressSearchScreen') }
-        style={styles.addressButton}
-        activeOpacity={1}
-      >
-        <Text style={styles.addressText}>{address}</Text>
-      </TouchableOpacity>
       <MapView
         style={styles.mapStyle}
         initialRegion={region.initialRegion}
@@ -106,10 +117,10 @@ const MapScreen = ({navigation}) => {
         onRegionChangeComplete={() => console.log('region changed')}
         showsTraffic={enableTraffic}
         >
-        {/* <Marker coordinate={{
-          latitude: location.latitdude,
+        <Marker coordinate={{
+          latitude: location.latitude,
           longitude: location.longitude,
-        }} /> */}
+        }} />
         {coordinates.map(coordinate => (
           <Marker
             key={`key_${coordinate.latLng.latitude}_${coordinate.latLng.longitude}`}
@@ -135,8 +146,32 @@ const MapScreen = ({navigation}) => {
           zIndex={1}
         />
       </MapView>
-      <View style={styles.mapOverlay} />
-      <ActionBottomSheet>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('AddressSearchScreen') }
+        style={styles.addressButton}
+        activeOpacity={1}
+      >
+        <Text style={styles.addressText}>{address}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => handleSnapClose()}
+        style={[isVisible ? styles.container : null]}
+      />
+
+      <FloatingButton
+        openSheet={() => handleSnapOpen(1)}
+        style={styles.button}
+      >
+        <AntDesign name="setting" size={24} color="#fff" />
+      </FloatingButton>
+      <ActionBottomSheet
+        bottomSheetRef={bottomSheetRef}
+        handleSnapOpen={handleSnapOpen}
+        snapPoints={snapPoints}
+        handleSheetChanges={handleSheetChanges}
+        close={() => setIsVisible(false)}
+        isVisible={isVisible}
+      >
         <BottomSheetContent
           radiusChange={handleRadiusChange}
           radius={radius}
@@ -160,7 +195,6 @@ const styles = StyleSheet.create({
     width: width - 20,
     marginHorizontal: 10,
     backgroundColor: '#fff',
-    zIndex: 10,
     padding: 10,
   },
   addressText: {
@@ -173,12 +207,24 @@ const styles = StyleSheet.create({
   mapStyle: {
     ...StyleSheet.absoluteFillObject,
   },
-  mapOverlay: {
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1,
     position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     top: 0,
     left: 0,
-    height: height,
-    width: 25,
-    opacity: 0.0,
+  },
+  button: {
+    position: 'absolute',
+    bottom: 30,
+    right: 20,
+    backgroundColor: '#0C0C34',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
