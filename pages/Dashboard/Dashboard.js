@@ -10,13 +10,13 @@ const DashBoard = () => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen
-        name="Map"
-        component={Map}
+        name="Artists"
+        component={Artists}
         options={{headerShown: false}}
       />
       <Drawer.Screen
-        name="Artists"
-        component={Artists}
+        name="Map"
+        component={Map}
         options={{headerShown: false}}
       />
       <Drawer.Screen

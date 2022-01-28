@@ -4,20 +4,20 @@ import {View, Image, Text, Pressable, StyleSheet} from 'react-native';
 const SingleArtist = ({artist, navigation}) => {
   const imgUri = `https://image.tmdb.org/t/p/w500${artist.profile_path}`;
   return (
-    <View style={[styleSheets.container, styleSheets.artistList]}>
+    <Pressable
+      style={[styleSheets.container, styleSheets.artistList]}
+      onPress={() => navigation.navigate('Artist', {name: artist.name, id: artist.id})}
+    >
       <View style={styleSheets.SingleArtist}>
         <Image style={styleSheets.img} source={{uri: imgUri}} />
-        <Pressable
-          onPress={() => navigation.navigate('Artist', {name: artist.name, id: artist.id})}>
-          <View>
-            <Text style={styleSheets.text}>{artist.name}</Text>
-            <Text style={[styleSheets.text, styleSheets.smText]}>
-              {artist.popularity}
-            </Text>
-          </View>
-        </Pressable>
+        <View>
+          <Text style={styleSheets.text}>{artist.name}</Text>
+          <Text style={[styleSheets.text, styleSheets.smText]}>
+            {artist.popularity}
+          </Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -29,7 +29,10 @@ const styleSheets = StyleSheet.create({
 
   container: {
     flex: 1,
-    padding: 5,
+    padding: 2,
+    margin:10,
+    backgroundColor: '#20232a',
+    borderRadius: 20,
   },
 
   center: {
@@ -44,7 +47,7 @@ const styleSheets = StyleSheet.create({
   SingleArtist: {
     flex: 1,
     flexDirection: 'row',
-    padding: 20,
+    padding: 5,
     alignItems: 'center',
   },
 

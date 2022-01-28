@@ -48,7 +48,7 @@ const ArtistListPage = ({navigation}) => {
 
 const styleSheets = StyleSheet.create({
   safeArea: {
-    backgroundColor: '#20232a',
+    backgroundColor: '#353E53',
     height: '100%',
   },
 
