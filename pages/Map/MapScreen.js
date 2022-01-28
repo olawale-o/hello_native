@@ -9,6 +9,7 @@ import BottomSheetContent from '../../components/BottomSheetContent';
 import {AddressContext} from '../../context/addressContext';
 import FloatingButton from '../../components/FloatingButton';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import IonIcons from 'react-native-vector-icons/Ionicons';
 const { width, height } = Dimensions.get('window');
 
 const LATITUDE_DELTA = 0.0922;
@@ -146,13 +147,18 @@ const MapScreen = ({navigation}) => {
           zIndex={1}
         />
       </MapView>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('AddressSearchScreen') }
-        style={styles.addressButton}
-        activeOpacity={1}
-      >
-        <Text style={styles.addressText}>{address}</Text>
-      </TouchableOpacity>
+      <View style={styles.searchBar}>
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <IonIcons name="ios-menu-outline" size={30} color="#000" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('AddressSearchScreen')}
+          style={styles.addressButton}
+          activeOpacity={1}
+        >
+          <Text style={styles.addressText}>{address}</Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
         onPress={() => handleSnapClose()}
         style={[isVisible ? styles.container : null]}
@@ -188,13 +194,20 @@ const MapScreen = ({navigation}) => {
 export default MapScreen;
 
 const styles = StyleSheet.create({
-  addressButton: {
+  searchBar: {
     position: 'absolute',
     top: 10,
     left: 0,
     width: width - 20,
     marginHorizontal: 10,
     backgroundColor: '#fff',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  addressButton: {
+    flex: 1,
     padding: 10,
   },
   addressText: {
